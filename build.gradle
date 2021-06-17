@@ -1,0 +1,47 @@
+buildscript {
+	ext {
+		springBootVersion = '2.5.0'
+		springDependencyManagementVersion = '1.0.11.RELEASE'
+		swaggerVersion = '3.0.0'
+		guavaVersion = '30.1.1-jre'
+		h2Version = '1.4.193'
+	}
+}
+plugins {
+	id 'org.springframework.boot' version "${springBootVersion}"
+	id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+	id 'java'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'com.whereq.campsite'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: "${swaggerVersion}"
+//	implementation group: 'io.springfox', name: 'springfox-swagger2', version: "${swaggerVersion}"
+//	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: "${swaggerVersion}"
+
+	implementation group: 'com.google.guava', name: 'guava', version: "${guavaVersion}"
+
+	runtimeOnly group: 'com.h2database', name: 'h2', version: "${h2Version}"
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.platform', module: 'junit-vintage-platform'
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	implementation 'junit:junit:4.12'
+}
+
+test {
+	useJUnitPlatform()
+}
